@@ -1,5 +1,5 @@
 import java.util.*
-class Tampilan {
+class Tampilan : CallBack {
     fun layar(){
         var masukkan = Scanner(System.`in`)
         // var input = Scanner(System.`in`)
@@ -19,17 +19,17 @@ class Tampilan {
             print("Pilihan Pemain 2 : ")
             var pilihanPemain2 = readLine()
            // var pem2 = PemainSuit(pilihanPemain2)
-            if (pilihanPemain1.equals("Gunting", ignoreCase = true)||
-                pilihanPemain1.equals("Batu", ignoreCase = true)||
-                pilihanPemain1.equals("Kertas", ignoreCase = true)||
-                pilihanPemain2.equals("Gunting", ignoreCase = true)&&
-                pilihanPemain2.equals("Batu", ignoreCase = true)||
-                pilihanPemain2.equals("Kertas", ignoreCase = true)) {
+            var pilihan = listOf<String>("gunting", "kertas", "batu")
+            if(pilihan.contains(pilihanPemain1!!.toLowerCase()))
+            {
                 println("==========GAME SUIT==========")
                 println("Pilihan pemain 1 : ${pilihanPemain1}")
                 println("Pilihan pemain 2 : ${pilihanPemain2}")
-                var syaratMain = Persyaratan()
-                println(pilihanPemain1?.let { pilihanPemain2?.let { it1 -> syaratMain.syaratMenang(it, it1) } })
+                var syaratMain = Persyaratan(this)
+                if (pilihanPemain2 != null) {
+                    syaratMain.syaratMenang(pilihanPemain1,pilihanPemain2)
+                }
+                //println(pilihanPemain1?.let { pilihanPemain2?.let { it1 -> syaratMain.syaratMenang(it, it1) } })
                 println("=============================")
             }else{
                 println("||==========PESAN==========||")
@@ -38,5 +38,9 @@ class Tampilan {
             }
         }else
             print("Game Keluar")
+    }
+
+    override fun cetakPemenang(status: String) {
+        println(status)
     }
 }
